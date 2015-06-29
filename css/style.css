@@ -1,0 +1,31 @@
+/* Global Style */
+
+body {
+    color: #303030;
+}
+
+.red {color: #B71427;}
+.yellow {color: #FFE658;}
+.sky {color: #6DBDD6;}
+
+.container {
+    margin-top: 10px;
+}
+
+/* Output Interface*/
+
+.number-output-container {
+    background-color: #303030;
+    margin-top: 10px;
+}
+
+.number-output-container span {
+    display: inline-block;
+    margin: 0 10px;
+    width: 30px;
+/*    text-shadow: 1px 1px 1px #FFFFFF;*/
+}
+
+canvas {
+    display: none;
+}

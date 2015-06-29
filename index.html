@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="css/style.css?1">
+</head>
+<body>
+  <div class="container">
+    <h2>Laplace's Equation Solver for Rectangular Region</h2>
+    <a href="#" onClick="toggleAbout()" class="go-to-about">About&nbsp; &gt; &gt;</a>
+    <a href="#" onClick="toggleAbout()" class="go-to-tool" style="display:none;">&lt; &lt; &nbsp;Back</a>
+    
+    <div class="tool container">
+
+        <div class="params">
+            <p>Below is a temporary setup to test the algorithm. The solved region is a 30x20 grid. Use below to determine constant boundary conditions.</p>
+            <form class="form-inline">
+                <div class="form-group">
+                    <label for="left">Left Boundary:</label>
+                    <input type="text" class="form-control" id="param-left" value="1">
+                    <label for="left">Top Boundary:</label>
+                    <input type="text" class="form-control" id="param-top" value="2">
+                </div>
+                <div class-"form-group">
+                    <label for="left">Right Boundary:</label>
+                    <input type="text" class="form-control" id="param-right" value="3">
+                    <label for="left">Bottom Boundary:</label>
+                    <input type="text" class="form-control" id="param-bottom" value="4">
+                </div>
+                <div class="form-group">
+                    <label>
+                      <input type="checkbox" id="param-solve-immediately"> Solve Immediately
+                    </label>
+                </div> <br/>
+                <button type="button" class="btn btn-default" id="solve-button" onClick="solve()">Solve</button>
+            </form>
+        </div>
+
+        <canvas id="color-coded-canvas">
+        </canvas>
+
+        <div class="number-output-container">
+        </div>
+    </div>
+
+    <div class="about container" style="display:none;">
+        <p>
+        Written by Charles Ko <br/>
+        University of Washington <br/>
+        Under supervision of Professor Larry Sorensen <br/> <br/>
+
+        This tool uses the relaxation method to solve a Laplace's equation in a rectangular region with boundary conditions.
+        </p>
+    </div>
+  </div>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.9.3/lodash.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  <script src="js/laplace.js?1"></script>
+  <script src="js/color_helper.js?1"></script>
+  <script src="js/index.js?1"></script>
+</body>
+</html>
