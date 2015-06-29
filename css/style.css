@@ -12,6 +12,21 @@ body {
     margin-top: 10px;
 }
 
+/* Input Interface */
+
+.tool {
+  margin-bottom: 20px;
+}
+
+.tool .params form .boundary label {
+  display: inline-block;
+  width: 60px;
+}
+
+.tool .params form input[type=text] {
+  width: 60px;
+}
+
 /* Output Interface*/
 
 .number-output-container {
@@ -28,4 +43,8 @@ body {
 
 canvas {
     display: none;
+}
+
+.post-solve-options {
+  margin: 10px;
 }

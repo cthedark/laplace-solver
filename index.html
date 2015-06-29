@@ -13,46 +13,85 @@
     
     <div class="tool container">
 
-        <div class="params">
-            <p>Below is a temporary setup to test the algorithm. The solved region is a 30x20 grid. Use below to determine constant boundary conditions.</p>
-            <form class="form-inline">
-                <div class="form-group">
-                    <label for="left">Left Boundary:</label>
-                    <input type="text" class="form-control" id="param-left" value="1">
-                    <label for="left">Top Boundary:</label>
-                    <input type="text" class="form-control" id="param-top" value="2">
-                </div>
-                <div class-"form-group">
-                    <label for="left">Right Boundary:</label>
-                    <input type="text" class="form-control" id="param-right" value="3">
-                    <label for="left">Bottom Boundary:</label>
-                    <input type="text" class="form-control" id="param-bottom" value="4">
-                </div>
-                <div class="form-group">
-                    <label>
-                      <input type="checkbox" id="param-solve-immediately"> Solve Immediately
-                    </label>
-                </div> <br/>
-                <button type="button" class="btn btn-default" id="solve-button" onClick="solve()">Solve</button>
-            </form>
-        </div>
+      <div class="params">
+        <p>Use the form below to define various parameters, then click Solve button to run the relaxation process.</p>
+        <form class="form">
+          <div class="form-group boundary form-inline" id="boundary-template">
+            <label>Position:</label>
+            <select class="param-boundary-type form-control">
+              <option value="constant">Constant</option>
+              <option value="sinusoid">Sinusoid</option>
+              <option value="polynomial">Polynomial</option>
+            </select>
+            <span class="constant">
+              <input type="text" class="form-control constant_param1" value='1'>
+            </span>
+            <span class="sinusoid" style="display:none;">
+              <input type="text" class="form-control sinusoid_param1" value='5'>
+              <span>sin&nbsp;(</span>
+              <input type="text" class="form-control sinusoid_param2" value='2'>
+              <span>(PI/8) x)</span>
+            </span>
+            <span class="polynomial" style="display:none;">
+              <input type="text" class="form-control polynomial_param1" value='0.05'>
+              <span>x^3</span> + 
+              <input type="text" class="form-control polynomial_param2" value='0'>
+              <span>x^2</span> + 
+              <input type="text" class="form-control polynomial_param3" value='0'>
+              <span>x</span>
+            </span>
+          </div>
+          <div class="form-group">
+            <label>
+              <input type="checkbox" id="param-solve-immediately"> Solve Immediately
+            </label>
+          </div>
+          <button type="button" class="btn btn-default" id="solve-button" onClick="solve()">Solve</button>
+        </form>
+      </div>
 
-        <canvas id="color-coded-canvas">
-        </canvas>
+      <canvas id="color-coded-canvas">
+      </canvas>
 
-        <div class="number-output-container">
-        </div>
+      <div class="number-output-container">
+      </div>
     </div>
 
     <div class="about container" style="display:none;">
-        <p>
-        Written by Charles Ko <br/>
-        University of Washington <br/>
-        Under supervision of Professor Larry Sorensen <br/> <br/>
+      <p>
+      Written by Charles Ko <br/>
+      Under supervision of Professor Larry Sorensen <br/>
+      University of Washington <br/><br/>
 
-        This tool uses the relaxation method to solve a Laplace's equation in a rectangular region with boundary conditions.
-        </p>
+      This tool uses the relaxation method to solve a Laplace's equation in a rectangular region with boundary conditions. The purposes of this tool are to help science students build intuition on how the solution would look and to demonstrate the numerical method used to solve it. <br/><br/>
+
+      Github Repo: <a href='https://github.com/charlieko/laplace-solver'>https://github.com/charlieko/laplace-solver</a>
+      </p>
     </div>
+
+    <div class='post-solve-options' style="display:none;">
+      <button type="button" class="btn btn-default" id="solve-button" onClick="showRawResult()">Show Result Array For Export</button>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="modal" role="dialog">
+      <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Modal Header</h4>
+          </div>
+          <div class="modal-body">
+            <p>Some text in the modal.</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.9.3/lodash.min.js"></script>

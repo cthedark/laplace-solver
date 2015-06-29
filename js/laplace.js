@@ -93,7 +93,7 @@ var Laplace = {
 
     var boundary_array = [];
     for(var i = 0; i <= array_num + 1; i++){
-      boundary_array.push(typeof b == 'function' ? b(i) : b);
+      boundary_array.push(typeof b == 'function' ? b(i, array_num) : b);
     }
     return reverse ? boundary_array.reverse() : boundary_array;
   },
