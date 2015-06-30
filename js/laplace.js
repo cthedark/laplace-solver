@@ -64,19 +64,30 @@ var Laplace = {
     // Advance the interative process a number of times specified by the argument
     if (this.field == null) throw 'Not initialized. Please run Laplace.init first.';
 
+    // Reset cached extrema
+    this.min = null; this.max = null;
+
     iterations = iterations || 1;
     for (var i = 0; i < iterations; i++){
-      for (var j = 1; j < this.field.length - 1; j++){
-        for (var k = 1; k < this.field[j].length - 1; k++){
+      for (var j = 0; j < this.field.length; j++){
+        for (var k = 0; k < this.field[j].length ; k++){
           // j and k are the coordinate for the current point
           // Calculate the average value of the surrounding points
-          this.field[j][k] = (this.field[j-1][k] + this.field[j+1][k] + this.field[j][k-1] + this.field[j][k+1]) / 4;
+
+          // Do not update the boundaries
+          if(j != 0 && k != 0 && j != this.field.length-1 && k != this.field[j].length-1)
+            this.field[j][k] = (this.field[j-1][k] + this.field[j+1][k] + this.field[j][k-1] + this.field[j][k+1]) / 4;
+
+          // Update Extrema
+          if(this.min == null || this.min > this.field[j][k]) {
+            this.min = this.field[j][k];
+          } 
+          if(this.max == null || this.max < this.field[j][k]) {
+            this.max = this.field[j][k];
+          }
         }
       }
     }
-
-    // Reset cached extrema
-    this.min = null; this.max = null;
   },
 
   getResult: function() {return this.field;},
