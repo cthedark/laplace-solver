@@ -3,24 +3,6 @@ $(function(){
   initBoundaryUI();
 });
 
-function outputCurrentResultToText(){
-  var result = Laplace.getResult();
-  var result_box = $('<div/>');
-  _(result).forEach(function(row){
-    var row_div = $('<div/>');
-    _(row).forEach(function(v){
-        row_div.append(
-          $('<span/>')
-            // Put space in between for people who want to copy/paste data
-            .html( (Math.round(v * 10000)/10000) + "&nbsp;" )
-            .css('color', ColorHelper.getColorHexForValue(v, Laplace.getMin(), Laplace.getMax())) 
-        ); 
-    }).value();
-    result_box.append(row_div);
-  }).value();
-  $('.number-output-container').empty().append(result_box);
-}
-
 function toggleAbout(){
   $('.about, .tool, .go-to-about, .go-to-tool').toggle();
 }
@@ -44,7 +26,7 @@ function solve(){
 
   if($('#param-solve-immediately').is(':checked') == true){
     Laplace.calculate(100);
-    outputCurrentResultToText();
+    OutputHelper.outputResultToText(Laplace.getResult(), $('.number-output-container'));
     done();
   } else{
     tick(0);
@@ -57,7 +39,7 @@ function solve(){
       return;
     }
     Laplace.calculate(2);
-    outputCurrentResultToText();
+    OutputHelper.outputResultToText(Laplace.getResult(), $('.number-output-container'));
     setTimeout(function(){tick(total);}, 200);
   }
 
