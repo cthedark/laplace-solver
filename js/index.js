@@ -1,5 +1,10 @@
 var iterations = 100;
 var anim_interval = 120;
+var unit_sizes = {
+  small: 10,
+  medium: 18,
+  large: 24
+}
 
 $(function(){
   // Init
@@ -12,8 +17,23 @@ function toggleAbout(){
 
 function solve(){
 
-  Laplace.init(30, 30);
-  OutputHelper.initCanvas(30, 30, 20, $('#color-coded-canvas'));
+  x = parseInt($('.solved-region-x').val(), 10);
+  y = parseInt($('.solved-region-y').val(), 10);
+
+  // Solved region validation
+  if(isNaN(x) || isNaN(y)){
+    showModal('You need to define the solved region size. Recommended values are 30 x 30.', 'Uh oh...');
+    return;
+  } else if(x > 100 || y > 100){
+    showModal('For the solved region, each side must not exceed 100 units. This is for your own sake. I don\'t want to crash your computer. Recommended values are 30 x 30.', 'Uh oh...');
+    return;
+  } else if(x < 1 || y < 1){
+    showModal('For the solved region, please provide how many units there should be each side. This has to be thus greater than 0. Recommended values are 30 x 30.', 'Uh oh...');
+    return;
+  }
+
+  Laplace.init(x, y);
+  OutputHelper.initCanvas(x, y, unit_sizes[$('.unit-size').val()], $('#color-coded-canvas'));
 
   disableUI();
   $('.post-solve-options').hide();
@@ -25,7 +45,7 @@ function solve(){
       extractBoundaryParams('bottom')
     );
   } catch(e){
-    showModal('Please input all parameters in number. Nothing can be blank. (Error Detail: ' + e + ')', 'Error');
+    showModal('Please input all boundary parameters in number. Nothing can be blank. (Error Detail: ' + e + ')', 'Oops');
     return;
   }
 
