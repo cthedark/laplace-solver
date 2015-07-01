@@ -9,9 +9,11 @@ function toggleAbout(){
 
 function solve(){
 
+  Laplace.init(30, 30);
+  OutputHelper.initCanvas(30, 30, 20, $('#color-coded-canvas'));
+
   disableUI();
   $('.post-solve-options').hide();
-  Laplace.init(20, 30);
   try{
     Laplace.setBoundaries(
       extractBoundaryParams('left'),
@@ -26,7 +28,8 @@ function solve(){
 
   if($('#param-solve-immediately').is(':checked') == true){
     Laplace.calculate(100);
-    OutputHelper.outputResultToText(Laplace.getResult(), $('.number-output-container'));
+    //OutputHelper.outputResultToText(Laplace.getResult(), $('.number-output-container'));
+    OutputHelper.outputResultToCanvas(Laplace.getResult());
     done();
   } else{
     tick(0);
@@ -39,7 +42,8 @@ function solve(){
       return;
     }
     Laplace.calculate(2);
-    OutputHelper.outputResultToText(Laplace.getResult(), $('.number-output-container'));
+    //OutputHelper.outputResultToText(Laplace.getResult(), $('.number-output-container'));
+    OutputHelper.outputResultToCanvas(Laplace.getResult());
     setTimeout(function(){tick(total);}, 200);
   }
 

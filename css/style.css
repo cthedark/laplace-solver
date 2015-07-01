@@ -42,9 +42,9 @@ body {
 }
 
 canvas {
-    display: none;
+  margin: 10px;
 }
 
 .post-solve-options {
-  margin: 10px;
+  margin: 0 0 0 10px;
 }
