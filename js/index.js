@@ -1,3 +1,6 @@
+var iterations = 100;
+var anim_interval = 120;
+
 $(function(){
   // Init
   initBoundaryUI();
@@ -27,7 +30,7 @@ function solve(){
   }
 
   if($('#param-solve-immediately').is(':checked') == true){
-    Laplace.calculate(100);
+    Laplace.calculate(iterations);
     //OutputHelper.outputResultToText(Laplace.getResult(), $('.number-output-container'));
     OutputHelper.outputResultToCanvas(Laplace.getResult());
     done();
@@ -37,18 +40,20 @@ function solve(){
   
   function tick(total){
     total++;
-    if (total > 50) {
+    if (total > iterations) {
       done();
       return;
     }
-    Laplace.calculate(2);
+    Laplace.calculate(1);
     //OutputHelper.outputResultToText(Laplace.getResult(), $('.number-output-container'));
     OutputHelper.outputResultToCanvas(Laplace.getResult());
-    setTimeout(function(){tick(total);}, 200);
+    $('.info .num-interation').text('Iterations: ' + total);
+    setTimeout(function(){tick(total);}, anim_interval);
   }
 
   function done(){
     enableUI(); 
+    $('.info .num-interation').text('Iterations: ' + iterations);
     $('.post-solve-options').show(); 
   }
     
@@ -92,11 +97,11 @@ function extractBoundaryParams(side){
 }
 
 function disableUI() {
-  $('params input, #solve-button').prop('disabled', true);
+  $('.params input, #solve-button').prop('disabled', true);
 }
 
 function enableUI(){
-  $('params input, #solve-button').prop('disabled', false);
+  $('.params input, #solve-button').prop('disabled', false);
 }
 
 function initBoundaryUI(){

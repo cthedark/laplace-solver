@@ -41,7 +41,7 @@ body {
 /*    text-shadow: 1px 1px 1px #FFFFFF;*/
 }
 
-canvas {
+canvas, .info {
   margin: 10px;
 }
 

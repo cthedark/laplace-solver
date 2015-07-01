@@ -48,12 +48,21 @@
           </div>
           <button type="button" class="btn btn-default" id="solve-button" onClick="solve()">Solve</button>
         </form>
+
+        <div class="info">
+          <span class="num-interation"></span>
+          <span class="coordinate"></span>
+        </div>
       </div>
 
       <canvas id="color-coded-canvas">
       </canvas>
 
       <div class="number-output-container">
+      </div>
+
+      <div class='post-solve-options' style="display:none;">
+        <button type="button" class="btn btn-default" id="solve-button" onClick="showRawResult()">Show Result Array For Export</button>
       </div>
     </div>
 
@@ -67,10 +76,6 @@
 
       Github Repo: <a href='https://github.com/charlieko/laplace-solver'>https://github.com/charlieko/laplace-solver</a>
       </p>
-    </div>
-
-    <div class='post-solve-options' style="display:none;">
-      <button type="button" class="btn btn-default" id="solve-button" onClick="showRawResult()">Show Result Array For Export</button>
     </div>
 
     <!-- Modal -->
