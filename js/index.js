@@ -1,4 +1,3 @@
-var iterations = 100;
 var anim_interval = 120;
 var unit_sizes = {
   small: 10,
@@ -19,6 +18,7 @@ function solve(){
 
   x = parseInt($('.solved-region-x').val(), 10);
   y = parseInt($('.solved-region-y').val(), 10);
+  iterations = parseInt($('.num-iterations').val(), 10);
 
   // Solved region validation
   if(isNaN(x) || isNaN(y)){
@@ -29,6 +29,9 @@ function solve(){
     return;
   } else if(x < 1 || y < 1){
     showModal('For the solved region, please provide how many units there should be each side. This has to be thus greater than 0. Recommended values are 30 x 30.', 'Uh oh...');
+    return;
+  } else if(isNaN(iterations) || iterations > 200 || iterations < 1){
+    showModal('For the number of iterations, enter an integer between 1 and 200.', 'Oops');
     return;
   }
 
