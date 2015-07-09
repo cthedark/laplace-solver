@@ -1,17 +1,32 @@
 var ColorHelper = {
-    getColorHexForValue: function(v, min, max){
-        // Hot value
-        var color_float = (v - min) / (max - min) * 255;
-        color_float = Math.round(color_float);
-        r_color_hex = this._makeSureTwoDigits(color_float.toString(16));
+  getColorHexForValue: function(v, min, max, mid_color){
+    var color_float = (v - min) / (max - min) * 511; // There can be 512 colors total
+    var color_index = Math.round(color_float);
+    var r_color_index=0, g_color_index=0, b_color_index=0;
 
-        // Cold value (reverse of hot)
-        b_color_hex = this._makeSureTwoDigits( (255 - color_float).toString(16) );
-
-        return "#" + r_color_hex + "00" + b_color_hex;
-    },
-
-    _makeSureTwoDigits: function(hex){
-        return (hex.length == 1) ? ('0' + hex) : hex;
+    if(mid_color == 'white'){
+      if (color_index > 255) {
+        r_color_index = 255;
+        b_color_index = 511 - color_index;
+        g_color_index = b_color_index;
+      } else if (color_index < 256){
+        b_color_index = 255;
+        r_color_index = color_index;
+        g_color_index = r_color_index;
+      }
+    } else {
+      // Purple (just blend red and blue)
+      r_color_index = Math.floor(color_index / 2);
+      b_color_index = 255 - r_color_index;
+      g_color_index = 0;
     }
+    
+    return "#" + this._makeSureTwoDigits(r_color_index.toString(16)) + 
+      this._makeSureTwoDigits(g_color_index.toString(16)) + 
+      this._makeSureTwoDigits(b_color_index.toString(16));
+  },
+
+  _makeSureTwoDigits: function(hex){
+    return (hex.length == 1) ? ('0' + hex) : hex;
+  }
 };

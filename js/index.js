@@ -16,9 +16,9 @@ function toggleAbout(){
 
 function solve(){
 
-  x = parseInt($('.solved-region-x').val(), 10);
-  y = parseInt($('.solved-region-y').val(), 10);
-  iterations = parseInt($('.num-iterations').val(), 10);
+  var x = parseInt($('.solved-region-x').val(), 10);
+  var y = parseInt($('.solved-region-y').val(), 10);
+  var iterations = parseInt($('.num-iterations').val(), 10);
 
   // Solved region validation
   if(isNaN(x) || isNaN(y)){
