@@ -41,10 +41,15 @@ body {
 /*    text-shadow: 1px 1px 1px #FFFFFF;*/
 }
 
-canvas {
-    display: none;
+canvas, .info {
+  margin: 10px;
+}
+
+.info .num-interation {
+  display: inline-block;
+  margin-right: 50px;
 }
 
 .post-solve-options {
-  margin: 10px;
+  margin: 0 0 0 10px;
 }
