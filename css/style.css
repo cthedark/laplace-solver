@@ -45,6 +45,11 @@ canvas, .info {
   margin: 10px;
 }
 
+.info .num-interation {
+  display: inline-block;
+  margin-right: 50px;
+}
+
 .post-solve-options {
   margin: 0 0 0 10px;
 }

@@ -1,6 +1,7 @@
 OutputHelper = {
 
   outputResultToText: function(result, output_div){
+    // Deprecated
     var result_box = $('<div/>');
     _(result).forEach(function(row){
       var row_div = $('<div/>');
@@ -22,16 +23,20 @@ OutputHelper = {
   y: null,
   pixels: null,
   ctx: null,
+  info_element: null,
+  result: null,
 
   initCanvas: function(x, y, pixels, canvas_elem){
     canvas_elem.attr('width', (x+2)*pixels);
     canvas_elem.attr('height', (y+2)*pixels);
+    canvas_elem.unbind('mousemove');
     //this.canvas = oCanvas.create({ canvas: '#'+canvas_elem.attr('id'), background: '#222' });
     this.canvas = canvas_elem[0];
     this.ctx = this.canvas.getContext("2d");
     this.x = x;
     this.y = y;
     this.pixels = pixels;
+    this.info_element = null;
   },
 
   outputResultToCanvas: function(result){
@@ -41,6 +46,7 @@ OutputHelper = {
     }
 
     var self = this;
+    this.result = result;
     this.ctx.beginPath();
 
     _.forEach(result, function(row, i){
@@ -58,6 +64,15 @@ OutputHelper = {
     if (!this.canvas){
       throw 'canvas is not initialized';
     }
+    this.info_element = info_output_span;
+    var self = this;
+
+    $(this.canvas).mousemove(function(e){
+      var x = Math.floor(e.offsetX / self.pixels);
+      var y = Math.floor(e.offsetY / self.pixels);
+      var info = 'V(' + x + ', ' + y +') = ' + self.result[x][y];
+      info_output_span.text(info);
+    });
   },
 
   resetCanvas: function(){

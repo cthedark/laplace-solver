@@ -78,6 +78,7 @@ function solve(){
     enableUI(); 
     $('.info .num-interation').text('Iterations: ' + iterations);
     $('.post-solve-options').show(); 
+    OutputHelper.boundInfoEventForCanvas($('.info .coordinate'));
   }
     
 }
