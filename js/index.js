@@ -155,7 +155,22 @@ function showModal(msg, title){
 }
 
 function showRawResult(){
-  // TODO
-  var text_data = "This feature is work in progress.";
-  showModal(text_data, 'Raw Result Array');
+  var data = OutputHelper.getRawTextOutput(Laplace.getResult());
+
+  $('#modal .modal-body')
+    .empty()
+    .append('The solved data in comma seperated values are output below. Use ctrl+c or cmd+c to copy.')
+    .append(
+      $('<textarea/>').addClass('raw-output').html(data).focus(function(e){
+        e.target.select();
+        $(e.target).on('mouseup', function(e) {
+          e.preventDefault();
+        });
+      })
+    );
+
+  $('#modal .modal-title').text('Result Data Export');
+  $('#modal').modal('show');
+  
+  setTimeout(function(){$('#modal .raw-output').focus();}, 400);
 }

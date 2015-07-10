@@ -77,5 +77,14 @@ OutputHelper = {
 
   resetCanvas: function(){
     this.canvas = null;
+  },
+
+  getRawTextOutput: function(arr){
+    var data = '';
+    _.forEach(arr, function(v, i){
+      data += v.toString();
+      if(i != arr.length - 1) data += '&#13;&#10;';
+    });
+    return data;
   }
 };
