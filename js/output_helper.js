@@ -57,6 +57,12 @@ OutputHelper = {
           self.ctx.fillRect(j*self.pixels, i*self.pixels, self.pixels, self.pixels);
       });
     });
+
+    // Draw the boundary indicator
+    self.ctx.strokeStyle="green";
+    self.ctx.lineWidth=3;
+    self.ctx.rect(self.pixels, self.pixels, self.pixels*self.x, self.pixels*self.y);
+    self.ctx.stroke();
     this.ctx.closePath();
   },
 
@@ -77,5 +83,14 @@ OutputHelper = {
 
   resetCanvas: function(){
     this.canvas = null;
+  },
+
+  getRawTextOutput: function(arr){
+    var data = '';
+    _.forEach(arr, function(v, i){
+      data += v.toString();
+      if(i != arr.length - 1) data += '&#13;&#10;';
+    });
+    return data;
   }
 };

@@ -13,6 +13,9 @@
     
     <div class="tool container">
 
+      <a href="#" onClick="toggleParams()" class="hide-params">Hide Options</a>
+      <a href="#" onClick="toggleParams()" class="show-params" style="display:none;">Show Options</a>
+
       <div class="params">
         <p>Use the form below to define various parameters, then click Solve button to run the relaxation process.</p>
         <form class="form">
@@ -50,6 +53,7 @@
             <input type="text" class="form-control solved-region-x" value='30' placeholder="x">
             <span> x </span>
             <input type="text" class="form-control solved-region-y" value='30' placeholder="y">
+            <span>(capped at 100 each)</span>
           </div>
           <div class="form-group form-inline">
             <label>Square Size:</label>
@@ -62,6 +66,7 @@
           <div class="form-group form-inline">
             <label># of Iterations:</label>
             <input type="text" class="form-control num-iterations" value='100' placeholder="x">
+            <span>(capped at 200)</span>
           </div>
 
           <h3>Animation Options</h3>
@@ -80,7 +85,12 @@
         <span class="coordinate"></span>
       </div>
 
+      <div class="place-holder">
+        Please use the options above to define boundary conditions and other options. Press Solve button, and the output will be visually rendered here.
+      </div>
+
       <canvas id="color-coded-canvas">
+        Uh oh... you are using an outdated browser. Download Chrome or Firefox.
       </canvas>
 
       <div class="number-output-container">
@@ -97,9 +107,9 @@
       Under supervision of Professor Larry Sorensen <br/>
       University of Washington <br/><br/>
 
-      This tool uses the relaxation method to solve a Laplace's equation in a rectangular region with boundary conditions. The purposes of this tool are to help science students build intuition on how the solution would look and to demonstrate the numerical method used to solve it. <br/><br/>
+      This tool uses the relaxation method to solve a Laplace's equation in a rectangular region with boundary conditions. The purposes of this tool are to help science students build intuition on how the solution would look and to demonstrate the numerical method used to solve it. <a href="https://en.wikipedia.org/wiki/Finite_element_method" target="_blank">Finite element method</a> is usually used in practice. This is not intended to be used for any real world problems. Don't use it for an engineering project.<br/><br/>
 
-      Github Repo: <a href='https://github.com/charlieko/laplace-solver'>https://github.com/charlieko/laplace-solver</a>
+      Github Repo: <a href='https://github.com/charlieko/laplace-solver' target="_blank">https://github.com/charlieko/laplace-solver</a>
       </p>
     </div>
 

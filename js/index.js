@@ -14,6 +14,10 @@ function toggleAbout(){
   $('.about, .tool, .go-to-about, .go-to-tool').toggle();
 }
 
+function toggleParams(){
+  $('.params, .hide-params, .show-params').toggle();
+}
+
 function solve(){
 
   var x = parseInt($('.solved-region-x').val(), 10);
@@ -35,11 +39,10 @@ function solve(){
     return;
   }
 
+   // Initialize solver and ouput helper 
   Laplace.init(x, y);
   OutputHelper.initCanvas(x, y, unit_sizes[$('.unit-size').val()], $('#color-coded-canvas'));
 
-  disableUI();
-  $('.post-solve-options').hide();
   try{
     Laplace.setBoundaries(
       extractBoundaryParams('left'),
@@ -52,6 +55,16 @@ function solve(){
     return;
   }
 
+  // Show output interface and hide input interface
+  $('#color-coded-canvas').show();
+  if($('.params').is(':visible')){
+    toggleParams();
+  }
+  disableUI();
+  $('.post-solve-options').hide();
+  $('.info .coordinate').text('');
+
+  // Solve and render
   if($('#param-solve-immediately').is(':checked') == true){
     Laplace.calculate(iterations);
     //OutputHelper.outputResultToText(Laplace.getResult(), $('.number-output-container'));
@@ -60,6 +73,8 @@ function solve(){
   } else{
     tick(0);
   }
+
+  $('.place-holder').remove();
   
   function tick(total){
     total++;
@@ -76,7 +91,7 @@ function solve(){
 
   function done(){
     enableUI(); 
-    $('.info .num-interation').text('Iterations: ' + iterations);
+    $('.info .num-interation').text('Iterations: ' + iterations + ' (done)');
     $('.post-solve-options').show(); 
     OutputHelper.boundInfoEventForCanvas($('.info .coordinate'));
   }
@@ -155,7 +170,22 @@ function showModal(msg, title){
 }
 
 function showRawResult(){
-  // TODO
-  var text_data = "This feature is work in progress.";
-  showModal(text_data, 'Raw Result Array');
+  var data = OutputHelper.getRawTextOutput(Laplace.getResult());
+
+  $('#modal .modal-body')
+    .empty()
+    .append('The solved data in comma seperated values are output below. Use ctrl+c or cmd+c to copy.')
+    .append(
+      $('<textarea/>').addClass('raw-output').html(data).focus(function(e){
+        e.target.select();
+        $(e.target).on('mouseup', function(e) {
+          e.preventDefault();
+        });
+      })
+    );
+
+  $('#modal .modal-title').text('Result Data Export');
+  $('#modal').modal('show');
+  
+  setTimeout(function(){$('#modal .raw-output').focus();}, 400);
 }
