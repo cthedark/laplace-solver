@@ -58,3 +58,7 @@ textarea.raw-output {
   width: 100%;
   height: 400px;
 }
+
+#color-coded-canvas {
+  display: none;
+}

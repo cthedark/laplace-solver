@@ -14,6 +14,10 @@ function toggleAbout(){
   $('.about, .tool, .go-to-about, .go-to-tool').toggle();
 }
 
+function toggleParams(){
+  $('.params, .hide-params, .show-params').toggle();
+}
+
 function solve(){
 
   var x = parseInt($('.solved-region-x').val(), 10);
@@ -33,6 +37,12 @@ function solve(){
   } else if(isNaN(iterations) || iterations > 200 || iterations < 1){
     showModal('For the number of iterations, enter an integer between 1 and 200.', 'Oops');
     return;
+  }
+
+  $('#color-coded-canvas').show();
+
+  if($('.params').is(':visible')){
+    toggleParams();
   }
 
   Laplace.init(x, y);
@@ -60,6 +70,8 @@ function solve(){
   } else{
     tick(0);
   }
+
+  $('.place-holder').remove();
   
   function tick(total){
     total++;

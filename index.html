@@ -13,6 +13,9 @@
     
     <div class="tool container">
 
+      <a href="#" onClick="toggleParams()" class="hide-params">Hide Options</a>
+      <a href="#" onClick="toggleParams()" class="show-params" style="display:none;">Show Options</a>
+
       <div class="params">
         <p>Use the form below to define various parameters, then click Solve button to run the relaxation process.</p>
         <form class="form">
@@ -82,7 +85,12 @@
         <span class="coordinate"></span>
       </div>
 
+      <div class="place-holder">
+        Please use the options above to define boundary conditions and other options. Press Solve button, and the output will be visually rendered here.
+      </div>
+
       <canvas id="color-coded-canvas">
+        Uh oh... you are using an outdated browser. Download Chrome or Firefox.
       </canvas>
 
       <div class="number-output-container">
