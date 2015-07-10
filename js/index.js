@@ -91,7 +91,7 @@ function solve(){
 
   function done(){
     enableUI(); 
-    $('.info .num-interation').text('Iterations: ' + iterations);
+    $('.info .num-interation').text('Iterations: ' + iterations + ' (done)');
     $('.post-solve-options').show(); 
     OutputHelper.boundInfoEventForCanvas($('.info .coordinate'));
   }
