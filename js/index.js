@@ -39,17 +39,10 @@ function solve(){
     return;
   }
 
-  $('#color-coded-canvas').show();
-
-  if($('.params').is(':visible')){
-    toggleParams();
-  }
-
+   // Initialize solver and ouput helper 
   Laplace.init(x, y);
   OutputHelper.initCanvas(x, y, unit_sizes[$('.unit-size').val()], $('#color-coded-canvas'));
 
-  disableUI();
-  $('.post-solve-options').hide();
   try{
     Laplace.setBoundaries(
       extractBoundaryParams('left'),
@@ -62,6 +55,16 @@ function solve(){
     return;
   }
 
+  // Show output interface and hide input interface
+  $('#color-coded-canvas').show();
+  if($('.params').is(':visible')){
+    toggleParams();
+  }
+  disableUI();
+  $('.post-solve-options').hide();
+  $('.info .coordinate').text('');
+
+  // Solve and render
   if($('#param-solve-immediately').is(':checked') == true){
     Laplace.calculate(iterations);
     //OutputHelper.outputResultToText(Laplace.getResult(), $('.number-output-container'));
