@@ -1,9 +1,4 @@
 var anim_interval = 120;
-var unit_sizes = {
-  small: 10,
-  medium: 18,
-  large: 24
-};
 
 $(function(){
   // Load the template file.
@@ -11,7 +6,20 @@ $(function(){
     ractive = new Ractive({
       el: '#laplace',
       template: template,
-      data: {}
+
+      // Models
+      data: {
+        // Solution Options
+        x: 30,
+        y: 30,
+        square_sizes: [
+            { size: 10, name: 'Small' },
+            { size: 18, name: 'Medium' },
+            { size: 24, name: 'Large' }
+        ],
+        selected_square_size: 18, // default
+        num_iterations: 100
+      }
     });
 
     // Init
@@ -29,9 +37,9 @@ function toggleParams(){
 
 function solve(){
 
-  var x = parseInt($('.solved-region-x').val(), 10);
-  var y = parseInt($('.solved-region-y').val(), 10);
-  var iterations = parseInt($('.num-iterations').val(), 10);
+  var x = parseInt(ractive.get('x'), 10);
+  var y = parseInt(ractive.get('y'), 10);
+  var iterations = parseInt(ractive.get('num_iterations'), 10);
 
   // Solved region validation
   if(isNaN(x) || isNaN(y)){
@@ -50,7 +58,7 @@ function solve(){
 
    // Initialize solver and ouput helper 
   Laplace.init(x, y);
-  OutputHelper.initCanvas(x, y, unit_sizes[$('.unit-size').val()], $('#color-coded-canvas'));
+  OutputHelper.initCanvas(x, y, ractive.get('selected_square_size'), $('#color-coded-canvas'));
 
   try{
     Laplace.setBoundaries(

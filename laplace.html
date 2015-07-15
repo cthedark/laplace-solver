@@ -42,22 +42,22 @@
         <h3>Solution Options</h3>
         <div class="form-group form-inline">
           <label>Solved Region:</label>
-          <input type="text" class="form-control solved-region-x" value='30' placeholder="x">
+          <input type="text" class="form-control solved-region-x" value={{x}} placeholder="x">
           <span> x </span>
-          <input type="text" class="form-control solved-region-y" value='30' placeholder="y">
+          <input type="text" class="form-control solved-region-y" value={{y}} placeholder="y">
           <span>(capped at 100 each)</span>
         </div>
         <div class="form-group form-inline">
           <label>Square Size:</label>
-          <select class="unit-size form-control">
-            <option value="small">Small</option>
-            <option value="medium" selected=true>Medium</option>
-            <option value="large">Large</option>
+          <select class="unit-size form-control" value="{{selected_square_size}}" >
+            {{#square_sizes}}
+            <option value={{size}}>{{name}}</option>
+            {{/square_sizes}}
           </select>
         </div>
         <div class="form-group form-inline">
           <label># of Iterations:</label>
-          <input type="text" class="form-control num-iterations" value='100' placeholder="x">
+          <input type="text" class="form-control num-iterations" value='{{num_iterations}}' placeholder="x">
           <span>(capped at 200)</span>
         </div>
 
