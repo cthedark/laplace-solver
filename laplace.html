@@ -12,24 +12,30 @@
       <p>Use the form below to define various parameters, then click Solve button to run the relaxation process.</p>
       <form class="form">
 
-        <!-- The boundary portion is constructed with JS -->
-        <div class="form-group boundary form-inline" id="boundary-template">
-          <label>Position:</label>
-          <select class="param-boundary-type form-control">
+        <h3>Boundaries</h3>
+        {{#boundaries}}
+        <div class="form-group boundary form-inline" id="boundary-{{id}}">
+          <label>{{position}}:&nbsp;</label>
+          <select class="param-boundary-type form-control" value="{{this.selected_type}}">
             <option value="constant">Constant</option>
             <option value="sinusoid">Sinusoid</option>
             <option value="polynomial">Polynomial</option>
           </select>
+          {{#if this.selected_type == "constant"}}
           <span class="constant">
-            <input type="text" class="form-control constant_param1" value='1'>
+            <input type="text" class="form-control constant_param1" value={{const_def}}>
           </span>
-          <span class="sinusoid" style="display:none;">
+          {{/if}}
+          {{#if this.selected_type == "sinusoid"}}
+          <span class="sinusoid">
             <input type="text" class="form-control sinusoid_param1" value='5'>
             <span>sin&nbsp;(</span>
             <input type="text" class="form-control sinusoid_param2" value='2'>
             <span>(PI/8) x)</span>
           </span>
-          <span class="polynomial" style="display:none;">
+          {{/if}}
+          {{#if this.selected_type == "polynomial"}}
+          <span class="polynomial">
             <input type="text" class="form-control polynomial_param1" value='0.05'>
             <span>x^3 + </span>
             <input type="text" class="form-control polynomial_param2" value='0'>
@@ -37,7 +43,9 @@
             <input type="text" class="form-control polynomial_param3" value='0'>
             <span>x</span>
           </span>
+          {{/if}}
         </div>
+        {{/boundaries}}
 
         <h3>Solution Options</h3>
         <div class="form-group form-inline">
@@ -64,9 +72,19 @@
         <h3>Animation Options</h3>
         <div class="form-group">
           <label>
-            <input type="checkbox" id="param-solve-immediately"> Solve Immediately W/O Animation
+            <input type="checkbox" id="param-solve-immediately" checked={{no_anim}}> Solve Immediately W/O Animation
           </label>
         </div>
+        {{#if !no_anim}}
+        <div class="form-group form-inline">
+          <label>Animation Speed:</label>
+          <select class="unit-size form-control" value="{{anim_interval}}" >
+            {{#anim_interval_options}}
+            <option value={{time}}>{{name}}</option>
+            {{/anim_interval_options}}
+          </select>
+        </div>
+        {{/if}}
         <button type="button" class="btn btn-default" id="solve-button" onClick="solve()">Solve</button>
       </form>
 

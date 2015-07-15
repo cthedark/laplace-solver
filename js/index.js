@@ -1,5 +1,3 @@
-var anim_interval = 120;
-
 $(function(){
   // Load the template file.
   $.get( 'laplace.html' ).then( function ( template ) {
@@ -9,6 +7,13 @@ $(function(){
 
       // Models
       data: {
+        // Boundary Options
+        boundaries: [
+          {position: 'Left', id: 'left', const_def: 1},
+          {position: 'Top', id: 'top', const_def: 2},
+          {position: 'Right', id: 'right', const_def: 3},
+          {position: 'Bottom', id: 'bottom', const_def: 4}
+        ],
         // Solution Options
         x: 30,
         y: 30,
@@ -18,12 +23,17 @@ $(function(){
             { size: 24, name: 'Large' }
         ],
         selected_square_size: 18, // default
-        num_iterations: 100
+        num_iterations: 100,
+        // Animation Options
+        no_anim: false,
+        anim_interval: 120,
+        anim_interval_options: [
+          {time: 70, name: 'Fast'},
+          {time: 120, name: 'Normal (Recommended)'},
+          {time: 240, name: 'Slow'}
+        ]
       }
     });
-
-    // Init
-    initBoundaryUI();
   });
 });
 
@@ -82,7 +92,7 @@ function solve(){
   $('.info .coordinate').text('');
 
   // Solve and render
-  if($('#param-solve-immediately').is(':checked') == true){
+  if(ractive.get('no_anim')){
     Laplace.calculate(iterations);
     //OutputHelper.outputResultToText(Laplace.getResult(), $('.number-output-container'));
     OutputHelper.outputResultToCanvas(Laplace.getResult());
@@ -103,7 +113,7 @@ function solve(){
     //OutputHelper.outputResultToText(Laplace.getResult(), $('.number-output-container'));
     OutputHelper.outputResultToCanvas(Laplace.getResult());
     $('.info .num-interation').text('Iterations: ' + total);
-    setTimeout(function(){tick(total);}, anim_interval);
+    setTimeout(function(){tick(total);}, ractive.get('anim_interval'));
   }
 
   function done(){
@@ -158,23 +168,6 @@ function disableUI() {
 
 function enableUI(){
   $('.params input, #solve-button').prop('disabled', false);
-}
-
-function initBoundaryUI(){
-  var template = $("#boundary-template"),
-      form = $('.tool .params form');
-  _.forEach(['Bottom', 'Right', 'Top', 'Left'], function(value, i){
-    var control = template.clone().attr('id', 'boundary-' + value.toLowerCase());
-    control.find('label').html(value + ':&nbsp;');
-    control.find('.constant_param1').val(4-i); // Set constant defaults like 1,2,3,4
-    control.find('select').change(function(e){
-      $(this).parent().children('span').hide();
-      $(this).parent().children('.'+$(this).val()).show();
-    });
-    form.prepend(control);
-  });
-  template.remove();
-  form.prepend($('<h3>').text('Boundaries'));
 }
 
 function showModal(msg, title){
