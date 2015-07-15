@@ -6,8 +6,12 @@
   <link rel="stylesheet" type="text/css" href="css/style.css?1">
 </head>
 <body>
+
+  <div id="ractive"></div>
+
+  <script id='template' type='text/ractive'>
   <div class="container">
-    <h2>Laplace's Equation Solver for Rectangular Region</h2>
+    <h2>Laplace&rsquo;s Equation Solver for Rectangular Region</h2>
     <a href="#" onClick="toggleAbout()" class="go-to-about">About&nbsp; &gt; &gt;</a>
     <a href="#" onClick="toggleAbout()" class="go-to-tool" style="display:none;">&lt; &lt; &nbsp;Back</a>
     
@@ -107,7 +111,7 @@
       Under supervision of Professor Larry Sorensen <br/>
       University of Washington <br/><br/>
 
-      This tool uses the relaxation method to solve a Laplace's equation in a rectangular region with boundary conditions. The purposes of this tool are to help science students build intuition on how the solution would look and to demonstrate the numerical method used to solve it. <a href="https://en.wikipedia.org/wiki/Finite_element_method" target="_blank">Finite element method</a> is usually used in practice. This is not intended to be used for any real world problems. Don't use it for an engineering project.<br/><br/>
+      This tool uses the relaxation method to solve a Laplace&rsquo;s equation in a rectangular region with boundary conditions. The purposes of this tool are to help science students build intuition on how the solution would look and to demonstrate the numerical method used to solve it. <a href="https://en.wikipedia.org/wiki/Finite_element_method" target="_blank">Finite element method</a> is usually used in practice. This is not intended to be used for any real world problems. Don&rsquo;t use it for an engineering project.<br/><br/>
 
       Github Repo: <a href='https://github.com/charlieko/laplace-solver' target="_blank">https://github.com/charlieko/laplace-solver</a>
       </p>
@@ -133,9 +137,12 @@
     </div>
 
   </div>
+  </script>
+
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.9.3/lodash.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  <script src='http://cdn.ractivejs.org/latest/ractive.js'></script>
   <script src="js/laplace.js?1"></script>
   <script src="js/color_helper.js?1"></script>
   <script src="js/output_helper.js?1"></script>

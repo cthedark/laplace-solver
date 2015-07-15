@@ -1,9 +1,16 @@
+
+var ractive = new Ractive({
+  el: '#ractive',
+  template: '#template',
+  data: { name: 'world' }
+});
+
 var anim_interval = 120;
 var unit_sizes = {
   small: 10,
   medium: 18,
   large: 24
-}
+};
 
 $(function(){
   // Init
