@@ -1,10 +1,3 @@
-
-var ractive = new Ractive({
-  el: '#ractive',
-  template: '#template',
-  data: { name: 'world' }
-});
-
 var anim_interval = 120;
 var unit_sizes = {
   small: 10,
@@ -13,8 +6,17 @@ var unit_sizes = {
 };
 
 $(function(){
-  // Init
-  initBoundaryUI();
+  // Load the template file.
+  $.get( 'laplace.html' ).then( function ( template ) {
+    ractive = new Ractive({
+      el: '#laplace',
+      template: template,
+      data: {}
+    });
+
+    // Init
+    initBoundaryUI();
+  });
 });
 
 function toggleAbout(){
