@@ -210,3 +210,7 @@ function showRawResult(){
   
   setTimeout(function(){$('#modal .raw-output').focus();}, 400);
 }
+
+function show3D(){
+  showModal('Sorry for disappointing. This feature is not implemented yet.', 'Sorry...');
+}
