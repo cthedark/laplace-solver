@@ -20,6 +20,7 @@
             <option value="constant">Constant</option>
             <option value="sinusoid">Sinusoid</option>
             <option value="polynomial">Polynomial</option>
+            <option value="array">Array</option>
           </select>
           {{#if this.selected_type == "constant"}}
           <span class="constant">
@@ -28,10 +29,11 @@
           {{/if}}
           {{#if this.selected_type == "sinusoid"}}
           <span class="sinusoid">
-            <input type="text" class="form-control sinusoid_param1" value='5'>
+            <input type="text" class="form-control sinusoid_param1" value='1'>
             <span>sin&nbsp;(</span>
             <input type="text" class="form-control sinusoid_param2" value='2'>
-            <span>(PI/8) x)</span>
+            <span>(PI/8) x) + </span>
+            <input type="text" class="form-control sinusoid_param3" value='1'>
           </span>
           {{/if}}
           {{#if this.selected_type == "polynomial"}}
@@ -42,6 +44,11 @@
             <span>x^2 + </span>
             <input type="text" class="form-control polynomial_param3" value='0'>
             <span>x</span>
+          </span>
+          {{/if}}
+          {{#if this.selected_type == "array"}}
+          <span class="array">
+            <input type="text" class="form-control array_param1" placeholder="Comma separated numbers e.g. 1,1,1,2,4,1,1,5..." value='1,1,1,1,1,1,1,1,1,1,3,3,3,3,3,3,3,3,3,3,1,1,1,1,1,1,1,1,1,1'>
           </span>
           {{/if}}
         </div>

@@ -9,10 +9,10 @@ $(function(){
       data: {
         // Boundary Options
         boundaries: [
-          {position: 'Left', id: 'left', const_def: 1},
-          {position: 'Top', id: 'top', const_def: 2},
-          {position: 'Right', id: 'right', const_def: 3},
-          {position: 'Bottom', id: 'bottom', const_def: 4}
+          {position: 'Left', id: 'left', const_def: 0},
+          {position: 'Top', id: 'top', const_def: 0, selected_type: 'sinusoid'},
+          {position: 'Right', id: 'right', const_def: 0},
+          {position: 'Bottom', id: 'bottom', const_def: 1, selected_type: 'array'}
         ],
         // Solution Options
         x: 30,
@@ -136,13 +136,15 @@ function extractBoundaryParams(side){
       return param1;
     case 'sinusoid':
       var param1 = parseFloat(form_group.find('.sinusoid_param1').val()),
-          param2 = parseFloat(form_group.find('.sinusoid_param2').val());
+          param2 = parseFloat(form_group.find('.sinusoid_param2').val()),
+          param3 = parseFloat(form_group.find('.sinusoid_param3').val())
       if(isNaN(param1)) throw 'Amplitude Param is NaN';
       if(isNaN(param2)) throw 'Frequecy Param is NaN';
+      if(isNaN(param3)) param3 = 0;
 
       return function(x, total){
         x = x - total/2;
-        return param1 * Math.sin(param2 * (Math.PI/8) * x);
+        return param1 * Math.sin(param2 * (Math.PI/8) * x) + param3;
       }
     case 'polynomial':
       var param1 = parseFloat(form_group.find('.polynomial_param1').val()),
@@ -157,6 +159,16 @@ function extractBoundaryParams(side){
         x = x - total/2;
         return param1 * Math.pow(x, 3) + param2 * Math.pow(x, 2) + param3 * x;
       }
+    case 'array':
+      var param1 = form_group.find('.array_param1').val(),
+        arr = _.map(param1.split(','), function(n){
+          var num = parseFloat(n);
+          if(isNaN(num)) throw 'A number in Array Param is NaN';
+          else return num;
+        });
+        return function(x, total){
+          return x < arr.length ? arr[x] : 0;
+        };
     default:
       return 0;
   }
