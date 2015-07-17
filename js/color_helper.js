@@ -1,5 +1,8 @@
 var ColorHelper = {
   getColorHexForValue: function(v, min, max, mid_color){
+    // Return white if v is NaN
+    if(isNaN(v) || v === undefined) return '#FFFFFF';
+     
     var color_float = (v - min) / (max - min) * 511; // There can be 512 colors total
     var color_index = Math.round(color_float);
     var r_color_index=0, g_color_index=0, b_color_index=0;

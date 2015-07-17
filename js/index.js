@@ -1,13 +1,40 @@
-var anim_interval = 120;
-var unit_sizes = {
-  small: 10,
-  medium: 18,
-  large: 24
-}
-
 $(function(){
-  // Init
-  initBoundaryUI();
+  // Load the template file.
+  $.get( 'laplace.html' ).then( function ( template ) {
+    ractive = new Ractive({
+      el: '#laplace',
+      template: template,
+
+      // Models
+      data: {
+        // Boundary Options
+        boundaries: [
+          {position: 'Left', id: 'left', const_def: 0},
+          {position: 'Top', id: 'top', const_def: 0, selected_type: 'sinusoid'},
+          {position: 'Right', id: 'right', const_def: 0},
+          {position: 'Bottom', id: 'bottom', const_def: 1, selected_type: 'array'}
+        ],
+        // Solution Options
+        x: 30,
+        y: 30,
+        square_sizes: [
+            { size: 10, name: 'Small' },
+            { size: 18, name: 'Medium' },
+            { size: 24, name: 'Large' }
+        ],
+        selected_square_size: 18, // default
+        num_iterations: 100,
+        // Animation Options
+        no_anim: false,
+        anim_interval: 120,
+        anim_interval_options: [
+          {time: 70, name: 'Fast'},
+          {time: 120, name: 'Normal (Recommended)'},
+          {time: 240, name: 'Slow'}
+        ]
+      }
+    });
+  });
 });
 
 function toggleAbout(){
@@ -20,9 +47,9 @@ function toggleParams(){
 
 function solve(){
 
-  var x = parseInt($('.solved-region-x').val(), 10);
-  var y = parseInt($('.solved-region-y').val(), 10);
-  var iterations = parseInt($('.num-iterations').val(), 10);
+  var x = parseInt(ractive.get('x'), 10);
+  var y = parseInt(ractive.get('y'), 10);
+  var iterations = parseInt(ractive.get('num_iterations'), 10);
 
   // Solved region validation
   if(isNaN(x) || isNaN(y)){
@@ -41,7 +68,7 @@ function solve(){
 
    // Initialize solver and ouput helper 
   Laplace.init(x, y);
-  OutputHelper.initCanvas(x, y, unit_sizes[$('.unit-size').val()], $('#color-coded-canvas'));
+  OutputHelper.initCanvas(x, y, ractive.get('selected_square_size'), $('#color-coded-canvas'));
 
   try{
     Laplace.setBoundaries(
@@ -65,7 +92,7 @@ function solve(){
   $('.info .coordinate').text('');
 
   // Solve and render
-  if($('#param-solve-immediately').is(':checked') == true){
+  if(ractive.get('no_anim')){
     Laplace.calculate(iterations);
     //OutputHelper.outputResultToText(Laplace.getResult(), $('.number-output-container'));
     OutputHelper.outputResultToCanvas(Laplace.getResult());
@@ -86,7 +113,7 @@ function solve(){
     //OutputHelper.outputResultToText(Laplace.getResult(), $('.number-output-container'));
     OutputHelper.outputResultToCanvas(Laplace.getResult());
     $('.info .num-interation').text('Iterations: ' + total);
-    setTimeout(function(){tick(total);}, anim_interval);
+    setTimeout(function(){tick(total);}, ractive.get('anim_interval'));
   }
 
   function done(){
@@ -109,13 +136,14 @@ function extractBoundaryParams(side){
       return param1;
     case 'sinusoid':
       var param1 = parseFloat(form_group.find('.sinusoid_param1').val()),
-          param2 = parseFloat(form_group.find('.sinusoid_param2').val());
+          param2 = parseFloat(form_group.find('.sinusoid_param2').val()),
+          param3 = parseFloat(form_group.find('.sinusoid_param3').val())
       if(isNaN(param1)) throw 'Amplitude Param is NaN';
       if(isNaN(param2)) throw 'Frequecy Param is NaN';
+      if(isNaN(param3)) param3 = 0;
 
       return function(x, total){
-        x = x - total/2;
-        return param1 * Math.sin(param2 * (Math.PI/8) * x);
+        return param1 * Math.sin(param2 * (Math.PI/8) * x) + param3;
       }
     case 'polynomial':
       var param1 = parseFloat(form_group.find('.polynomial_param1').val()),
@@ -130,6 +158,16 @@ function extractBoundaryParams(side){
         x = x - total/2;
         return param1 * Math.pow(x, 3) + param2 * Math.pow(x, 2) + param3 * x;
       }
+    case 'array':
+      var param1 = form_group.find('.array_param1').val(),
+        arr = _.map(param1.split(','), function(n){
+          var num = parseFloat(n);
+          if(isNaN(num)) throw 'A number in Array Param is NaN';
+          else return num;
+        });
+        return function(x, total){
+          return x <= arr.length ? arr[x-1] : 0;
+        };
     default:
       return 0;
   }
@@ -141,23 +179,6 @@ function disableUI() {
 
 function enableUI(){
   $('.params input, #solve-button').prop('disabled', false);
-}
-
-function initBoundaryUI(){
-  var template = $("#boundary-template"),
-      form = $('.tool .params form');
-  _.forEach(['Bottom', 'Right', 'Top', 'Left'], function(value, i){
-    var control = template.clone().attr('id', 'boundary-' + value.toLowerCase());
-    control.find('label').html(value + ':&nbsp;');
-    control.find('.constant_param1').val(4-i); // Set constant defaults like 1,2,3,4
-    control.find('select').change(function(e){
-      $(this).parent().children('span').hide();
-      $(this).parent().children('.'+$(this).val()).show();
-    });
-    form.prepend(control);
-  });
-  template.remove();
-  form.prepend($('<h3>').text('Boundaries'));
 }
 
 function showModal(msg, title){
@@ -188,4 +209,8 @@ function showRawResult(){
   $('#modal').modal('show');
   
   setTimeout(function(){$('#modal .raw-output').focus();}, 400);
+}
+
+function show3D(){
+  showModal('Sorry for disappointing. This feature is not implemented yet.', 'Sorry...');
 }
