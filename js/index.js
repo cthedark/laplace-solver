@@ -143,7 +143,6 @@ function extractBoundaryParams(side){
       if(isNaN(param3)) param3 = 0;
 
       return function(x, total){
-        x = x - total/2;
         return param1 * Math.sin(param2 * (Math.PI/8) * x) + param3;
       }
     case 'polynomial':
@@ -167,7 +166,7 @@ function extractBoundaryParams(side){
           else return num;
         });
         return function(x, total){
-          return x < arr.length ? arr[x] : 0;
+          return x <= arr.length ? arr[x-1] : 0;
         };
     default:
       return 0;

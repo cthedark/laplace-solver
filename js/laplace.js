@@ -79,6 +79,7 @@ var Laplace = {
             this.field[j][k] = (this.field[j-1][k] + this.field[j+1][k] + this.field[j][k-1] + this.field[j][k+1]) / 4;
 
           // Update Extrema
+          if(isNaN(this.field[j][k])) continue;
           if(this.min == null || this.min > this.field[j][k]) {
             this.min = this.field[j][k];
           } 
@@ -104,6 +105,7 @@ var Laplace = {
 
     var boundary_array = [];
     for(var i = 0; i <= array_num + 1; i++){
+      // We don't need to care about vetices, insert NaN
       boundary_array.push(typeof b == 'function' ? b(i, array_num) : b);
     }
     return reverse ? boundary_array.reverse() : boundary_array;
@@ -115,6 +117,7 @@ var Laplace = {
     for(var i = 0; i <= this.y+1; i++){
       for(var j = 0; j <= this.x+1; j++){
         var curr = this.field[i][j];
+        if(isNaN(curr)) continue;
         if (extreme == null) {
           extreme = curr;
           continue;

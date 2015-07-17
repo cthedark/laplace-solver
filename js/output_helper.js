@@ -76,7 +76,7 @@ OutputHelper = {
     $(this.canvas).mousemove(function(e){
       var x = Math.floor(e.offsetX / self.pixels);
       var y = Math.floor(e.offsetY / self.pixels);
-      var info = 'V(' + x + ', ' + y +') = ' + self.result[x][y];
+      var info = 'V(' + x + ', ' + y +') = ' + self.result[y][x];
       info_output_span.text(info);
     });
   },
