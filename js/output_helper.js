@@ -1,4 +1,4 @@
-OutputHelper = {
+var OutputHelper = {
 
   outputResultToText: function(result, output_div){
     // Deprecated

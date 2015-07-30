@@ -66,6 +66,10 @@ function solve(){
     return;
   }
 
+  // Hide the 3d canvas as it might be from the previous solution.
+  // It will be re-drawn when the button is clicked
+  $('#3d-canvas').hide();
+
    // Initialize solver and ouput helper 
   Laplace.init(x, y);
   OutputHelper.initCanvas(x, y, ractive.get('selected_square_size'), $('#color-coded-canvas'));
@@ -121,6 +125,7 @@ function solve(){
     $('.info .num-interation').text('Iterations: ' + iterations + ' (done)');
     $('.post-solve-options').show(); 
     OutputHelper.boundInfoEventForCanvas($('.info .coordinate'));
+    show3D();
   }
     
 }
@@ -212,5 +217,6 @@ function showRawResult(){
 }
 
 function show3D(){
-  showModal('Sorry for disappointing. This feature is not implemented yet.', 'Sorry...');
+  OutputHelper3D.output3D($('#3d-canvas'), Laplace.getResult(),
+    Laplace.getMax(), Laplace.getMin());
 }
