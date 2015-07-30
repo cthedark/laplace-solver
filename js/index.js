@@ -216,5 +216,6 @@ function showRawResult(){
 }
 
 function show3D(){
-  OutputHelper3D.output3D($('#3d-canvas'));
+  OutputHelper3D.output3D($('#3d-canvas'), Laplace.getResult(),
+    Laplace.getMax(), Laplace.getMin());
 }
