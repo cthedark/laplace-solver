@@ -113,9 +113,6 @@ var OutputHelper3D = {
         // We shall increment by the specified step - but if it exceeds the boundary, set to the boundary
         if(curr_y != y_total && curr_y + y_step > y_total) curr_y = y_total;
         else curr_y += y_step;
-        
-        // why is this crashing!!!
-        if(curr_y >= 5) break;
       }
       paths.push(smooth ? _makeSmoothPath(points) : _makePath(points));
 
@@ -135,9 +132,6 @@ var OutputHelper3D = {
 
         if(curr_x != x_total && curr_x + x_step > x_total) curr_x = x_total;
         else curr_x += x_step;
-        
-        // why is this crashing!!!
-        if(curr_x >= 5) break;
       }
       paths.push(smooth ? _makeSmoothPath(points) : _makePath(points));
 
