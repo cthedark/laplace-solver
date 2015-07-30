@@ -125,6 +125,7 @@ function solve(){
     $('.info .num-interation').text('Iterations: ' + iterations + ' (done)');
     $('.post-solve-options').show(); 
     OutputHelper.boundInfoEventForCanvas($('.info .coordinate'));
+    show3D();
   }
     
 }
