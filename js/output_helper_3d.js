@@ -45,7 +45,8 @@ function _makeSmoothPath (points){
 
 var OutputHelper3D = {
   renderer: null,
-  COLOR: new Pre3d.RGBA(109 / 255, 194 / 255, 237 / 255, 1),
+  COLOR: new Pre3d.RGBA(0 / 255, 100 / 255, 20 / 255, 1),
+  AXIS_COLOR: new Pre3d.RGBA(140 / 255, 140 / 255, 140 / 255, 1),
   solution_array: null,
   solution_max: null,
   solution_min: null,
@@ -146,7 +147,9 @@ var OutputHelper3D = {
     // Draw x and y axis
     var self = this;
     self.renderer.clearBackground();
-    self.renderer.ctx.setStrokeColor(0.4, 0.4, 0.4, 1);
+    self.renderer.ctx.setStrokeColor(
+      self.AXIS_COLOR.r, self.AXIS_COLOR.g, self.AXIS_COLOR.b, self.AXIS_COLOR.a
+    );
     for (var i = 0; i < self.AXES.length; i++) {
       self.renderer.drawPath(self.AXES[i]);
     }
@@ -179,7 +182,7 @@ var OutputHelper3D = {
     this.solution_min = min;
     this.cached_graph_max = null;
     this.renderer = new Pre3d.Renderer(canvas_elem[0]);
-    this.renderer.ctx.lineWidth = 0.7;
+    this.renderer.ctx.lineWidth = 1;
     this.renderer.camera.focal_length = 2.5;
 
     canvas_elem.unbind();
