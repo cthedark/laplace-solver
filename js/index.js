@@ -17,13 +17,7 @@ $(function(){
         // Solution Options
         x: 30,
         y: 30,
-        square_sizes: [
-            { size: 10, name: 'Small' },
-            { size: 18, name: 'Medium' },
-            { size: 24, name: 'Large' }
-        ],
-        selected_square_size: 18, // default
-        num_iterations: 100,
+        num_iterations: 50,
         // Animation Options
         no_anim: false,
         anim_interval: 120,
@@ -43,6 +37,11 @@ function toggleAbout(){
 
 function toggleParams(){
   $('.params, .hide-params, .show-params').toggle();
+}
+
+function getSquareSize(x, y){
+  var bigger = x > y ? x : y;
+  return Math.ceil(600/bigger);
 }
 
 function solve(){
@@ -75,7 +74,7 @@ function solve(){
 
    // Initialize solver and ouput helper 
   Laplace.init(x, y);
-  OutputHelper.initCanvas(x, y, ractive.get('selected_square_size'), $('#color-coded-canvas'));
+  OutputHelper.initCanvas(x, y, getSquareSize(x,y), $('#color-coded-canvas'));
 
   try{
     Laplace.setBoundaries(
