@@ -69,6 +69,9 @@ function solve(){
   // Hide the 3d canvas as it might be from the previous solution.
   // It will be re-drawn when the button is clicked
   $('#3d-canvas').hide();
+  $('.nav-tabs').show();
+  $('.nav-tabs .2d-tab a').tab('show');
+  $('.nav-tabs .3d-tab').addClass('disabled').find('a').removeAttr('data-toggle');
 
    // Initialize solver and ouput helper 
   Laplace.init(x, y);
@@ -126,6 +129,7 @@ function solve(){
     $('.post-solve-options').show(); 
     OutputHelper.boundInfoEventForCanvas($('.info .coordinate'));
     show3D();
+    $('.nav-tabs .3d-tab').removeClass('disabled').find('a').attr('data-toggle', 'tab');
   }
     
 }
