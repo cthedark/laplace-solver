@@ -63,14 +63,6 @@
           <span>(capped at 100 each)</span>
         </div>
         <div class="form-group form-inline">
-          <label>Square Size:</label>
-          <select class="unit-size form-control" value="{{selected_square_size}}" >
-            {{#square_sizes}}
-            <option value={{size}}>{{name}}</option>
-            {{/square_sizes}}
-          </select>
-        </div>
-        <div class="form-group form-inline">
           <label># of Iterations:</label>
           <input type="text" class="form-control num-iterations" value='{{num_iterations}}' placeholder="x">
           <span>(capped at 200)</span>
@@ -92,7 +84,7 @@
           </select>
         </div>
         {{/if}}
-        <button type="button" class="btn btn-default" id="solve-button" onClick="solve()">Solve</button>
+        <button type="button" class="btn btn-primary" id="solve-button" onClick="solve()">Solve</button>
       </form>
 
     </div>
@@ -106,16 +98,26 @@
       Please use the options above to define boundary conditions and other options. Press Solve button, and the output will be visually rendered here.
     </div>
 
-    <canvas id="color-coded-canvas">
-      Uh oh... you are using an outdated browser. Download Chrome or Firefox.
-    </canvas>
+    <ul class="nav nav-tabs" role="tablist" style="display:none;">
+      <li role="presentation" class="active 2d-tab"><a href="#2D" role="tab" data-toggle="tab">2D</a></li>
+      <li role="presentation" class="3d-tab"><a href="#3D" role="tab" data-toggle="tab">3D</a></li>
+    </ul>
+
+    <div class="tab-content">
+      <div role="tabpanel" class="tab-pane active" id="2D">
+        <canvas id="color-coded-canvas">
+          Uh oh... you are using an outdated browser. Download Chrome or Firefox.
+        </canvas>
+      </div>
+      <div role="tabpanel" class="tab-pane" id="3D">
+        <canvas id="3d-canvas" width="800" height="600" style="display:none;">
+          Uh oh... you are using an outdated browser. Download Chrome or Firefox.
+        </canvas>
+      </div>
+    </div>
 
     <div class="number-output-container">
     </div>
-
-    <canvas id="3d-canvas" width="800" height="600" style="display:none;">
-      Uh oh... you are using an outdated browser. Download Chrome or Firefox.
-    </canvas>
 
     <div class='post-solve-options' style="display:none;">
       <button type="button" class="btn btn-default" id="solve-button" onClick="showRawResult()">Show Result Array For Export</button>
